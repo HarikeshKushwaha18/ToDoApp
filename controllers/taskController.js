@@ -30,6 +30,7 @@ exports.createTask = async (req, res) => {
 
 exports.getTasks = async(req, res)=>{
     try{
+        const {userId} = req.body;
         const users = await User.find().populate("tasks")
         console.log(users);
         res.status(200).json(

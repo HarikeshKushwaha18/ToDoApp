@@ -37,6 +37,7 @@ exports.login = async(req, res) =>{
         // create token
 
         const token = jwt.sign({userId:user._id}, process.env.JWT_SECRET, {expiresIn: '2h'});
+        // localStorage.setItem('token', token);
         const userObj = user.toObject();
         userObj.token = token;
 
@@ -44,6 +45,7 @@ exports.login = async(req, res) =>{
             {
                 success: true,
                 data: user,
+                token:token,
                 message: "Login Successfully"
             }
         )
