@@ -1,10 +1,12 @@
 const express  = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 const routers = require('./routes/todoRoutes')
 app.use('/api/v1',routers);

@@ -102,4 +102,53 @@ exports.deleteTask = async(req, res)=>{
     }
 }
 
+exports.gettasksByStatus  =async(req, res) =>{
+    try{
+        const {userId} = req.params;
+        const {status} = req.query;
+        
+        if(!status){
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "Status not found"
+                }
+            )
+        }
+        if(!userId){
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: "User not found"
+                }
+            )
+        }
+
+        const tasks = await Todo.find({status:status, createdBy:userId});
+        if(!tasks || tasks.length === 0){
+            return res.status(404).json(
+                {
+                    success: false,
+                    message: `No task found with ${status}`
+                }
+            )
+        }
+        return res.status(200).json(
+            {
+                success: true,
+                data: tasks,
+                message: `task with "${status}" found`
+            }
+        )
+    }catch(err){
+        console.error(err);
+        res.status(500).json(
+            {
+                success: false,
+                message: "server side error"
+            }
+        )
+    }
+}
+
 
