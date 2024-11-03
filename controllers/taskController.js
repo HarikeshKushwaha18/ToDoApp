@@ -31,7 +31,7 @@ exports.createTask = async (req, res) => {
 exports.getTasks = async(req, res)=>{
     try{
         const {userId} = req.body;
-        const users = await User.find().populate("tasks")
+        const users = await Todo.find({createdBy:userId})
         console.log(users);
         res.status(200).json(
             {

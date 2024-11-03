@@ -35,6 +35,8 @@ exports.signup = async(req, res) =>{
             )
         }
 
+        // const generateOtp = require('../utilityFunctions/otp');
+
         const savedUser = await User.create({name, email, password:hashPassword,})
         return res.status(200).json(
             {
