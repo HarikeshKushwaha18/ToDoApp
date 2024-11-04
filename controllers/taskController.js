@@ -30,7 +30,8 @@ exports.createTask = async (req, res) => {
 
 exports.getTasks = async(req, res)=>{
     try{
-        const {userId} = req.body;
+        const {userId} = req.params;
+        console.log("UserId",userId);
         const users = await Todo.find({createdBy:userId})
         console.log(users);
         res.status(200).json(
@@ -46,6 +47,7 @@ exports.getTasks = async(req, res)=>{
             {
                 success: false,
                 message: "Data not found"
+
             }
         )
     }
@@ -82,7 +84,9 @@ exports.updateStatus = async(req, res) =>{
 exports.deleteTask = async(req, res)=>{
     try{
         const {userId, taskId} = req.body;
-        const deletedTask = await Todo.findByIdAndDelete({user: userId, _id:taskId});
+        console.log(userId);
+        console.log(taskId);
+        const deletedTask = await Todo.findByIdAndDelete({user:userId, _id:taskId});
         const updated = await User.findByIdAndUpdate(userId, {$pull: {tasks: deletedTask._id}}, {new: true})
         res.status(200).json(
             {

@@ -16,7 +16,7 @@ router.post('/deleteTask', deleteTask)
 
 router.post('/logout', logout);
 
-router.get('/getTasks', auth, getTasks);
+router.get('/getTasks/:userId', auth, getTasks);
 router.get('/getTasksByStatus/:userId',auth, gettasksByStatus)
 
 module.exports = router;
